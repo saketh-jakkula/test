@@ -15,18 +15,22 @@ case $1 in
     users=true;events=true;uevents=true
 esac
 
+## prints users
 if [ $users ]; then
   echo "Users:"
   awk '{print $2}' input.log |sort -u
   echo ""
 fi
 
+##Prints events
 if [ $events ]; then
   echo "Events:"
   awk '{ $1="";$2="";print $0 }' input.log |sed -e 's/^[[:space:]]*//'|sort -u
   echo ""
 fi
 
+
+##prints no of events per user
 if [ $uevents ]; then
   echo "No of events per user per date:"
   for i in `awk '{print $1}' input.log |cut -d'T' -f1|sort -ur`; do
